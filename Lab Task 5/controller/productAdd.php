@@ -1,0 +1,32 @@
+<?php 
+    session_start();
+    require("../model/model.php");
+
+    if(isset($_POST["add"])){
+
+        $name = $_POST["pd_name"];
+        $product_buying_price = $_POST["pd_buying_price"];
+        $product_selling_price = $_POST["pd_selling_price"];
+
+        $_SESSION["pd_msg"] = "";
+
+        if(!empty($name) && !empty($product_buying_price) && !empty($product_selling_price)){
+            $data = array(
+                "name" => $name,
+                "pd_buying_price" => $product_buying_price,
+                "pd_selling_price" => $product_selling_price
+            );
+            if(addProduct($data)){
+                $_SESSION["pd_msg"] = " Product Added ";
+                
+            }else{
+                $_SESSION["pd_msg"] = " Data Addition Error ";
+            }
+            
+        }else{
+            $_SESSION["pd_msg"] = " All Fields are required ";
+        }
+        header("location: ../view/add.php");
+    }
+
+?>
